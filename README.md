@@ -17,6 +17,8 @@ vagrant suspend
 vagrant resume
 ```
 
+NGINX can be accessed on port 4567; so http://localhost:4567 in your browser to access. 
+
 Put your static files in the /www folder and to have NGINX pick them up:
 
 ```bash
