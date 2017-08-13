@@ -34,9 +34,31 @@ function addDatabase {
 
 function setupNGINXServerBlock {
 	sudo cp -f /vagrant/nginx.conf /etc/nginx/nginx.conf
-	sudo cp -rf /vagrant/www/. /usr/share/nginx/html/
 	sudo setsebool httpd_can_network_connect on -P
 	sudo systemctl restart nginx
+}
+
+function installVirtualBoxGuestAdditions {
+	sudo yum groupinstall "Development Tools" -y
+    sudo yum install kernel-devel -y
+    sudo yum install epel-release -y
+    sudo yum install dkms -y
+    sudo yum install wget -y 
+    
+    wget -O /tmp/Fedora-18-i386-DVD.iso "http://download.virtualbox.org/virtualbox/5.1.26/VBoxGuestAdditions_5.1.26.iso"
+    sudo mkdir /mnt/VBoxLinuxAdditions
+    sudo mount -t iso9660 -o loop /tmp/Fedora-18-i386-DVD.iso /mnt/VBoxLinuxAdditions
+    sudo sh /mnt/VBoxLinuxAdditions/VBoxLinuxAdditions.run
+    
+    umount /mnt/VBoxLinuxAdditions
+    rm /tmp/Fedora-18-i386-DVD.iso
+}
+
+function runFileSyncAsService {
+	sudo cp /vagrant/syncservice /etc/systemd/system/sync.service
+	sudo systemctl daemon-reload
+	sudo systemctl start sync
+	sudo systemctl enable sync
 }
 
 updatePackages
@@ -45,3 +67,5 @@ installMariaDB
 addDBUser
 addDatabase
 setupNGINXServerBlock
+installVirtualBoxGuestAdditions
+runFileSyncAsService
