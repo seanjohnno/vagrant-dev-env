@@ -12,13 +12,6 @@ Creating the environment:
 
 ```bash
 vagrant up
-
-# To pause/resume
-vagrant suspend
-vagrant resume
-
-# To destroy
-vagrant destroy
 ```
 
 To pause/resume:
