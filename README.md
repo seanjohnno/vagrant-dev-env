@@ -1,30 +1,40 @@
 # Vagrant-Dev-Env
 
-Vagrant environment running CentOS 7, NGINX and MariaDB. Allows you to use a production-like environment but develop/debug in your host machines IDE. NGINX serves static files but also reverse proxies to port 5678 on your host machine. MariaDB is accessible on port 3306.
+Vagrant box running CentOS 7, NGINX and MariaDb. It's intended to mimic a production environment while allowing you to develop on your local machine. 
+
+* NGINX can be accessed on http://localhost:4567. Serving static files from /usr/share/nginx/html (file sync coming soon). If no matching file is found...
+* NGINX reverse proxies to port 5678 on your host machine. Allowing it to connect to your web framework of choice
+* MariaDb is accessible through port 3306 (user: root, pass: mypassword)
 
 ## Getting started
 
-Provisioning the environment:
+Creating the environment:
 
 ```bash
-cd development
-
-# You only need to run this once
-./vagrantup.sh
+vagrant up
 
 # To pause/resume
 vagrant suspend
 vagrant resume
+
+# To destroy
+vagrant destroy
 ```
 
-NGINX can be accessed on port 4567; so http://localhost:4567 in your browser to access. 
-
-Put your static files in the /www folder and to have NGINX pick them up:
+To pause/resume:
 
 ```bash
-curl http://localhost:4567/syncfiles
+vagrant suspend
+vagrant resume
 ```
 
-...I've set IntelliJ (my IDE of choice) to automatically perform this step on each build.
+To destroy:
 
-MariaDB can be accessed on port 3306 with *password123*
+```bash
+vagrant destroy
+```
+
+## Prerequisites
+
+* Virtualbox
+* Vagrant

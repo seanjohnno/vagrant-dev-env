@@ -1,5 +1,1 @@
-**/.vagrant
-**/.gradle
-
-development/www/*
-development/Vagrantfile
+.vagrant
